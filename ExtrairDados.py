@@ -1,7 +1,7 @@
 from pypdf import PdfReader
 import re
 
-def extrair_dados(texto_extraido):
+def extrair_dados(texto_extraido, termos_chave):
     texto_formatado = texto_extraido
     # Inicializa um dicionário para armazenar os dados extraídos
     dados = {}
@@ -33,9 +33,24 @@ def extrair_dados(texto_extraido):
     }
     
     # Para cada padrão, encontra e armazena o valor correspondente no dicionário
-    for chave, padrao in padroes.items():
+    for termo_chave in termos_chave:
+        nome_variavel = termo_chave["nome"]
+        termo_pesquisar = termo_chave["pesquisar"]
+
+        # Modificando o padrão para usar grupos nomeados
+        padrao = rf"\b{re.escape(termo_pesquisar)}\s*([^\n]+)"
+
         match = re.search(padrao, texto_formatado)
         if match:
-            dados[chave] = match.group(1).strip()
+            # Verifica se a chave é 'agente_trânsito'
+            if nome_variavel == 'agente_trânsito':
+                # Extrai somente os dígitos após o termo "AGENTE DE TRÂNSITO"
+                agente_transito = re.search(r'\b\d+\b', match.group(1))
+                if agente_transito:
+                    dados[nome_variavel] = agente_transito.group(0)
+            else:
+                dados[nome_variavel] = match.group(1).strip()
+
+    return dados
 
     return dados
