@@ -16,7 +16,6 @@ def extrair_dados(texto_extraido, termos_chave):
         "LOCAL": r"LOCAL\s+([^\n]+)",
         "DATA DA INFRAÇÃO": r"DATA DA INFRAÇÃO\s+(\d{2}/\d{2}/\d{4})",
         "HORA": r"HORA\s+([^\n]+)",
-        "DATA DA EMISSÃO": r"DATA DA EMISSÃO\s+(\d{2}/\d{2}/\d{4})",
         "VELOCIDADE REGULAMENTADA": r"VELOCIDADE REGULAMENTADA\s+KM/H(\d+)",
         "VELOCIDADE MEDIDA": r"VELOCIDADE MEDIDA\s+KM/H(\d+)",
         "VELOCIDADE CONSIDERADA": r"VELOCIDADE CONSIDERADA\s+KM/H(\d+)",
@@ -58,4 +57,3 @@ def extrair_dados(texto_extraido, termos_chave):
 
     return dados
 
-    return dados
