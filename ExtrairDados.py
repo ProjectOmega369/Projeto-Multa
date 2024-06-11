@@ -1,6 +1,7 @@
 from pypdf import PdfReader
 import re
 
+
 def extrair_dados(texto_extraido, termos_chave):
     texto_formatado = texto_extraido
     # Inicializa um dicionário para armazenar os dados extraídos
@@ -15,7 +16,7 @@ def extrair_dados(texto_extraido, termos_chave):
         "INFRAÇÃO": r"INFRAÇÃO\s+([^\n]+)",
         "LOCAL": r"LOCAL\s+([^\n]+)",
         "DATA DA INFRAÇÃO": r"DATA DA INFRAÇÃO\s+(\d{2}/\d{2}/\d{4})",
-        "HORA": r"HORA\s+([^\n]+)",
+        "HORA": r"HORA\s+([^\n\d]+)",
         "VELOCIDADE REGULAMENTADA": r"VELOCIDADE REGULAMENTADA\s+KM/H(\d+)",
         "VELOCIDADE MEDIDA": r"VELOCIDADE MEDIDA\s+KM/H(\d+)",
         "VELOCIDADE CONSIDERADA": r"VELOCIDADE CONSIDERADA\s+KM/H(\d+)",
@@ -52,6 +53,10 @@ def extrair_dados(texto_extraido, termos_chave):
                 valor_numerico = re.search(r'\d+', match.group(1))
                 if valor_numerico:
                   dados[nome_variavel] = valor_numerico.group(0)
+            elif nome_variavel == 'hora_infracao':
+                hora = re.search(r'[^\d]*(\d{2}:\d{2})', match.group(1))
+                if hora:
+                    dados[nome_variavel] = hora.group(1)
             else:
                 dados[nome_variavel] = match.group(1).strip()
 
