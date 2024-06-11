@@ -43,11 +43,16 @@ def extrair_dados(texto_extraido, termos_chave):
         match = re.search(padrao, texto_formatado)
         if match:
             # Verifica se a chave é 'agente_trânsito'
-            if nome_variavel == 'agente_trânsito':
+            if nome_variavel == 'agente_transito':
                 # Extrai somente os dígitos após o termo "AGENTE DE TRÂNSITO"
                 agente_transito = re.search(r'\b\d+\b', match.group(1))
                 if agente_transito:
                     dados[nome_variavel] = agente_transito.group(0)
+            elif 'velocidade' in nome_variavel.lower():
+                # Extrai apenas os valores numéricos
+                valor_numerico = re.search(r'\d+', match.group(1))
+                if valor_numerico:
+                  dados[nome_variavel] = valor_numerico.group(0)
             else:
                 dados[nome_variavel] = match.group(1).strip()
 
