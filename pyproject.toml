@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "leitorpython"
+version = "0.1.0"
+description = "\"Leitor de Pdf automatico, fazendo a extração de dados Chaves\""
+authors = ["ProjectOmega369 <luca.up@yahoo.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pypdf = "^4.2.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
